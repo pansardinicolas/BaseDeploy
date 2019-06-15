@@ -56,6 +56,9 @@ dependencies {
     compileOnly 'javax.annotation:jsr250-api:1.0'
     implementation 'javax.inject:javax.inject:1'
 
+    //OkHTTP
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+
     // retrofit + gson
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
@@ -65,5 +68,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rxjava2_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
 
+    //kotlin coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
 }
 
