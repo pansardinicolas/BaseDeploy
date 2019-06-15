@@ -22,6 +22,7 @@ ext {
     rxandroid_version = '2.0.1'
     dagger2_version = '2.15'
     support_version = '26.1.0'
+    room_version = '2.1.0-alpha04'
 }
 
 allprojects {

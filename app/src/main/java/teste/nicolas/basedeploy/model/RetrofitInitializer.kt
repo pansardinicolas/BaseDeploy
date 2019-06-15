@@ -1,13 +1,32 @@
-package teste.nicolas.basedeploy.model.datasource
+package teste.nicolas.basedeploy.model
 
+import dagger.Module
+import dagger.Provides
+import dagger.Reusable
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import teste.nicolas.basedeploy.model.datasource.MovieDatabaseApi
 import java.util.concurrent.TimeUnit
 
-class RetrofitInitializer() {
-    fun init() {
-        val retrofit = Retrofit.Builder()
+
+@Module
+// Safe here as we are dealing with a Dagger 2 module
+@Suppress("unused")
+object RetrofitInitializer {
+
+    @Provides
+    @Reusable
+    @JvmStatic
+    internal fun provideMovieDatabaseApi(retrofit: Retrofit): MovieDatabaseApi {
+        return retrofit.create(MovieDatabaseApi::class.java)
+    }
+
+    @Provides
+    @Reusable
+    @JvmStatic
+    internal fun provideRetrofitInterface() : Retrofit{
+        return Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/3/")
             .client(createClientInterceptor())
             .addConverterFactory(GsonConverterFactory.create())
