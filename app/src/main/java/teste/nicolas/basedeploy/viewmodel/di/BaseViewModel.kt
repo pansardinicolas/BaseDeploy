@@ -1,10 +1,10 @@
 package teste.nicolas.basedeploy.viewmodel.di
 
-import androidx.lifecycle.ViewModel
 import teste.nicolas.basedeploy.model.RetrofitInitializer
+import teste.nicolas.basedeploy.viewmodel.CoroutineViewModel
 import teste.nicolas.basedeploy.viewmodel.UpcomingMoviesViewModel
 
-abstract class BaseViewModel: ViewModel(){
+abstract class BaseViewModel : CoroutineViewModel() {
     private val injector: ViewModelInjector = DaggerViewModelInjector
             .builder()
             .networkModule(RetrofitInitializer)

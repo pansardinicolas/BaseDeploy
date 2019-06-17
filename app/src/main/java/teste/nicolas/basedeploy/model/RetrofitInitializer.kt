@@ -1,5 +1,8 @@
 package teste.nicolas.basedeploy.model
 
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -8,12 +11,21 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import teste.nicolas.basedeploy.model.datasource.MovieDatabaseApi
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 
 @Module
 // Safe here as we are dealing with a Dagger 2 module
 @Suppress("unused")
 object RetrofitInitializer {
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson {
+        return GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .create()
+    }
 
     @Provides
     @Reusable

@@ -1,4 +1,10 @@
 package teste.nicolas.basedeploy.model.data.dto.remote
 
-data class UpcomingMovieResponse(val id: Int, val title: String, val vote_average: Number, val release_date: String,
-                                 var poster_path: String? = null)
+import teste.nicolas.basedeploy.model.data.dto.local.UpcomingMovie
+
+sealed class UpcomingMovieResponse {
+
+    internal data class Success(val movie: UpcomingMovie) : UpcomingMovieResponse()
+
+    internal data class Error(val error: String) : UpcomingMovieResponse()
+}

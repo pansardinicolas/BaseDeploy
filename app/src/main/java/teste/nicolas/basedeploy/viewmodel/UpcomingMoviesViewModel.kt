@@ -1,25 +1,69 @@
 package teste.nicolas.basedeploy.viewmodel
 
-import io.reactivex.android.schedulers.AndroidSchedulers
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import teste.nicolas.basedeploy.model.datasource.MovieDatabaseApi
+import kotlinx.coroutines.launch
+import teste.nicolas.basedeploy.model.data.dto.remote.MovieDetailResponse
+import teste.nicolas.basedeploy.model.data.dto.remote.UpcomingMovieResponse
+import teste.nicolas.basedeploy.model.repository.MovieDataRepository
 import teste.nicolas.basedeploy.viewmodel.di.BaseViewModel
-import javax.inject.Inject
 
-class UpcomingMoviesViewModel: BaseViewModel(){
-    @Inject
-    lateinit var movieApi: MovieDatabaseApi
+class UpcomingMoviesViewModel(private val repo: MovieDataRepository) : BaseViewModel() {
+
+    private val upcomingMovies: MutableLiveData<List<UpcomingMovieResponse>> = MutableLiveData()
+    private val movieDetail: MutableLiveData<MovieDetailResponse> = MutableLiveData()
+    private val loading: MutableLiveData<Boolean> = MutableLiveData()
+    private val error: MutableLiveData<Throwable> = MutableLiveData()
+
+    fun upcomingMovies() = upcomingMovies as LiveData<List<UpcomingMovieResponse>>
+    fun movieDetail() = movieDetail as LiveData<MovieDetailResponse>
+    fun loading() = loading as LiveData<Boolean>
+    fun error() = error as LiveData<Throwable>
+
 
     private lateinit var subscription: Disposable
 
     init{
-        //loadMovies()
+        loadUpcomingMovies()
+    }
+
+
+    private fun loadUpcomingMovies() {
+
+        jobs add launch {
+            loading.value = true
+            try {
+                upcomingMovies.value = repo.getUpcomingMovies().value
+                loading.value = false
+            } catch (t: Throwable) {
+                upcomingMovies.value = emptyList()
+                error.value = t
+            } finally {
+                loading.value = false
+            }
+        }
+    }
+
+    private fun loadMovieDetail(movieId: Int) {
+
+        jobs add launch {
+            loading.value = true
+            try {
+                movieDetail.value = repo.getMovieDetails(movieId).value
+                loading.value = false
+            } catch (t: Throwable) {
+                upcomingMovies.value = emptyList()
+                error.value = t
+            } finally {
+                loading.value = false
+            }
+        }
     }
 
     //In case I was using ReactiveX
 /*
-    private fun loadMovies(){
+    private fun loadUpcomingMovies(){
         subscription = movieApi.getMovieDetails()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

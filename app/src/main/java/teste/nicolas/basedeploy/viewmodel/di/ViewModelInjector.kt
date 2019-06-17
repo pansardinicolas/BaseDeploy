@@ -22,5 +22,6 @@ interface ViewModelInjector {
         fun build(): ViewModelInjector
 
         fun networkModule(networkModule: RetrofitInitializer): Builder
+
     }
 }

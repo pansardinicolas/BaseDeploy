@@ -1,10 +1,15 @@
 package teste.nicolas.basedeploy.view.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import dagger.android.DaggerActivity
 import teste.nicolas.basedeploy.R
+import teste.nicolas.basedeploy.viewmodel.UpcomingMoviesViewModel
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : DaggerActivity() {
+
+    @Inject
+    lateinit var upcomingMoviesViewModel: UpcomingMoviesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

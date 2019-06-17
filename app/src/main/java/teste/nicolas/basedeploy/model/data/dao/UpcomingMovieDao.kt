@@ -1,5 +1,6 @@
 package teste.nicolas.basedeploy.model.data.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import teste.nicolas.basedeploy.model.data.dto.local.UpcomingMovie
 
@@ -7,14 +8,14 @@ import teste.nicolas.basedeploy.model.data.dto.local.UpcomingMovie
 interface UpcomingMovieDao {
 
     @Query("SELECT * FROM upcomingmovie")
-    suspend fun getUpcomingMovies(): List<UpcomingMovie>
+    fun getUpcomingMovies(): LiveData<List<UpcomingMovie>>
 
     @Insert
-    suspend fun insertUpcomingMovie(movie: UpcomingMovie)
+    fun insertUpcomingMovies(movies: List<UpcomingMovie>)
 
     @Update
-    suspend fun updateUpcomingMovie(movie: UpcomingMovie)
+    fun updateUpcomingMovie(movie: UpcomingMovie)
 
     @Delete
-    suspend fun deleteUpcomingMovie(movie: UpcomingMovie)
+    fun deleteUpcomingMovie(movie: UpcomingMovie)
 }
