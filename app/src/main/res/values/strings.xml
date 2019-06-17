@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BaseDeploy</string>
+    <string name="toolbar_title">Upcoming Movies</string>
 </resources>
