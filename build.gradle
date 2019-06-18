@@ -17,7 +17,7 @@ buildscript {
 
 ext {
     ext.gradle_version = '3.4.1'
-    retrofit_version = '2.3.0'
+    retrofit_version = '2.6.0'
     rxjava2_version = '2.1.8'
     rxandroid_version = '2.0.1'
     dagger2_version = '2.15'

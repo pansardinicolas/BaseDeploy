@@ -10,7 +10,7 @@ import teste.nicolas.basedeploy.model.data.dto.remote.MovieDetailResponse
 interface MovieDatabaseApi {
 
     @GET("movies/get-upcoming")
-    fun getUpcomingMovies(): Deferred<Response<List<UpcomingMovie>>>
+    suspend fun getUpcomingMovies(): Deferred<Response<List<UpcomingMovie>>>
 
     @GET("movies/get-movie-details/{movieId}")
     fun getMovieDetails(@Path("movieId") movieId: Int) : Deferred<MovieDetailResponse>

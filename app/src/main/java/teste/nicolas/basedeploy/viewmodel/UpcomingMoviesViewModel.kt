@@ -7,9 +7,8 @@ import kotlinx.coroutines.launch
 import teste.nicolas.basedeploy.model.data.dto.remote.MovieDetailResponse
 import teste.nicolas.basedeploy.model.data.dto.remote.UpcomingMovieResponse
 import teste.nicolas.basedeploy.model.repository.MovieDataRepository
-import teste.nicolas.basedeploy.viewmodel.di.BaseViewModel
 
-class UpcomingMoviesViewModel(private val repo: MovieDataRepository) : BaseViewModel() {
+class UpcomingMoviesViewModel(private val repo: MovieDataRepository) : CoroutineViewModel() {
 
     private val upcomingMovies: MutableLiveData<List<UpcomingMovieResponse>> = MutableLiveData()
     private val movieDetail: MutableLiveData<MovieDetailResponse> = MutableLiveData()

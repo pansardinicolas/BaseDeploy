@@ -12,20 +12,21 @@ import teste.nicolas.basedeploy.model.data.dao.AppDatabase
 import teste.nicolas.basedeploy.model.data.dto.local.UpcomingMovie
 import teste.nicolas.basedeploy.model.data.dto.remote.MovieDetailResponse
 import teste.nicolas.basedeploy.model.data.dto.remote.UpcomingMovieResponse
+import teste.nicolas.basedeploy.model.datasource.MovieDatabaseApi
 import java.io.IOException
-import javax.inject.Inject
 
-class MovieDataRepository() : MovieRepository, BaseRepository() {
-
+class MovieDataRepository(private val db: AppDatabase, private val api: MovieDatabaseApi) : MovieRepository,
+    BaseRepository() {
+/*
     @Inject
     lateinit var db: AppDatabase
     @Inject
-    lateinit var api: Repository
+    lateinit var api: MovieDatabaseApi*/
 
     private suspend fun getUpcomingMoviesFromRepo() = withContext(IO) {
         async {
             try {
-                val result = api.getDataFromApi().getUpcomingMovies().await()
+                val result = api.getUpcomingMovies().await()
                 if (result.isSuccessful) {
                     result.body()?.let { db.upcomingMovieDao().insertUpcomingMovies(it) }
                 } else {
@@ -38,7 +39,7 @@ class MovieDataRepository() : MovieRepository, BaseRepository() {
     }
 
     private suspend fun getMovieDetailsFromRepo(movieId: Int) = withContext(IO) {
-        async { api.getDataFromApi().getMovieDetails(movieId).await() }
+        async { api.getMovieDetails(movieId).await() }
     }
 
     override suspend fun getUpcomingMovies(): LiveData<List<UpcomingMovieResponse>> {
